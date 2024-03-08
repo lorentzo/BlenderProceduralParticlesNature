@@ -46,7 +46,8 @@ for obj in bpy.data.collections["LittlePlanet"].all_objects:
             octaves = 2 + int(vg_idx)
             #vert_weight = 1.0-mathutils.noise.multi_fractal(v_co, H, lacunarity, octaves, noise_basis='PERLIN_ORIGINAL') * 0.9
             hardTransitions = True
-            v_co_perturbed = mathutils.Vector((v_co[0] + int(vg_idx), v_co[1] + int(vg_idx), v_co[2] + int(vg_idx)))
+            offset = 323.23
+            v_co_perturbed = mathutils.Vector((v_co[0] + int(vg_idx) + offset, v_co[1] + int(vg_idx) + offset, v_co[2] + int(vg_idx) + offset))
             vert_weight = mathutils.noise.turbulence(v_co_perturbed, octaves, hardTransitions, noise_basis='BLENDER', amplitude_scale=3, frequency_scale=0.1)
             vg.add([v_idx], vert_weight, "REPLACE")
             print("For vertex", v_idx, "populating group", vg_idx, "with", vert_weight)

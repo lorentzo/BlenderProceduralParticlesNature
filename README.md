@@ -16,13 +16,19 @@ Blender 4.0.2
 * Using generated vertex weights to control hair particle system density and scale
 * Using emitter particle system with turbulence force field
 * Sphere (negative) displacement is guided by vertex weight: same vert weight as for hair particles can be used to obtain that terrain is adapted with instanced geometry.
+* Animating polyhaven models: https://polyhaven.com/models
 
 ## Gallery
 
+![](Gallery/0168.png)
+![](Gallery/cycles1.png)
+![](Gallery/cycles2.png)
 ![](Gallery/6.png)
 
+
 ## TODO:
-* cycles render
+* composit stars
+* water
 
 
 ## Ideas
