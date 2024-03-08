@@ -13,7 +13,7 @@ import mathutils
 # bpy.types.MeshVertex.groups https://docs.blender.org/api/current/bpy.types.MeshVertex.html#bpy.types.MeshVertex.groups
 # bpy.types.VertexGroupElement https://docs.blender.org/api/current/bpy.types.VertexGroupElement.html#bpy.types.VertexGroupElement
 
-for obj in bpy.data.collections["ProceduralVertWeight"].all_objects:
+for obj in bpy.data.collections["LittlePlanet"].all_objects:
     nVertGroupsToCreate = len(obj.particle_systems) # equals to the number of particle systems!
     print("Checking if object has existing vertex groups...")
     # bpy_struct.items() returns the items of this objects custom properties (matches Python’s dictionary function of the same name).
@@ -41,10 +41,13 @@ for obj in bpy.data.collections["ProceduralVertWeight"].all_objects:
         for vg in obj.vertex_groups:
             vg_idx = vg.index
             # https://docs.blender.org/api/current/mathutils.noise.html
-            H = 1.2
+            H = 1.2 + int(vg_idx)
             lacunarity = 2 + int(vg_idx)
             octaves = 2 + int(vg_idx)
-            vert_weight = mathutils.noise.multi_fractal(v_co, H, lacunarity, octaves, noise_basis='PERLIN_ORIGINAL') * 0.9
+            #vert_weight = 1.0-mathutils.noise.multi_fractal(v_co, H, lacunarity, octaves, noise_basis='PERLIN_ORIGINAL') * 0.9
+            hardTransitions = True
+            v_co_perturbed = mathutils.Vector((v_co[0] + int(vg_idx), v_co[1] + int(vg_idx), v_co[2] + int(vg_idx)))
+            vert_weight = mathutils.noise.turbulence(v_co_perturbed, octaves, hardTransitions, noise_basis='BLENDER', amplitude_scale=3, frequency_scale=0.1)
             vg.add([v_idx], vert_weight, "REPLACE")
             print("For vertex", v_idx, "populating group", vg_idx, "with", vert_weight)
 
